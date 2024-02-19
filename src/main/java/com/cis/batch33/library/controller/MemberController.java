@@ -21,4 +21,15 @@ public class MemberController {
     public Member createMember(@RequestBody  Member member){
         return memberService.createMember(member);
     }
+
+    @PutMapping
+    public Member updateMember(@RequestBody Member member){
+        // Set the memberId for the member object to be updated
+        return memberService.updateMember(member);
+    }
+
+    @DeleteMapping
+    public void deleteMember(Long memberId){
+        memberService.deleteMember(memberId);
+    }
 }

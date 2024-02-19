@@ -21,8 +21,19 @@ public class MemberService {
         return  member;
     }
 
+
     public Member getMember(Long memberId) {
     return memberMap.get(memberId);
 
+    }
+
+    public Member updateMember(Member member) {
+        Long memberId = member.getMemberId();
+        memberMap.put(memberId, member);
+        return member;
+    }
+
+    public void deleteMember(Long memberId) {
+        memberMap.remove(memberId);
     }
 }
