@@ -79,6 +79,94 @@ select * from library_member;
 select * from address;
 select * from checkout;
 
+select * from library_member inner join address on library_member.address_id=address.address_id;
+
+select * from library_member lm inner join address a on lm.address_id=a.address_id
+ where lm.membership_level="Premium" and a.zip=62701;
+ 
+ select * from library_member lm left outer join address a on lm.address_id=a.address_id;
+ 
+ select * from library_member lm right outer join address a on lm.address_id=a.address_id;
+ 
+ -- Not supported Full outer join
+ -- select * from library_member lm full outer join address a on lm.address_id=a.address_id;
+ 
+-- create member
+-- find the member by name and mobile_number
+SELECT *
+FROM library_member
+WHERE first_name = 'John' 
+    AND last_name = 'Doe' 
+    AND phone_number = 1234567890;
+
+
+-- display all the members
+select * from library_member;
+
+-- checkout entries
+INSERT INTO checkout values(101,4243566740531,1,CURDATE(), DATE_ADD(CURDATE(), INTERVAL 15 DAY), FALSE);
+INSERT INTO checkout values(102,8287799401476,5,CURDATE(), DATE_ADD(CURDATE(), INTERVAL 15 DAY), FALSE);
+
+-- list all the books a member has checked out
+SELECT b.title, b.author_name, b.year_published
+FROM library_member m
+JOIN checkout c ON m.member_id = c.member_id
+JOIN book_isbn bi ON c.isbn = bi.isbn
+JOIN book b ON bi.book_id = b.book_id
+WHERE m.first_name = 'John' 
+    AND m.last_name = 'Doe';
+
+-- checkout a book for a given member and given book
+select * from checkout;
+select * from book_isbn;
+INSERT INTO checkout values(103,3540321979243,6,CURDATE(), DATE_ADD(CURDATE(), INTERVAL 15 DAY), FALSE);
+
+
+-- list avaialble books and quantity that can be checked out
+SELECT 
+    b.book_id,
+    b.title,
+    b.author_name,
+    b.year_published,
+    b.quantity - COALESCE(SUM(CASE WHEN c.is_returned = FALSE THEN 1 ELSE 0 END), 0) AS available_quantity
+FROM 
+    book b
+LEFT JOIN 
+    book_isbn bi ON b.book_id = bi.book_id
+LEFT JOIN 
+    checkout c ON bi.isbn = c.isbn
+GROUP BY 
+    b.book_id, b.title, b.author_name, b.year_published, b.quantity;
+
+-- list all the checkouts that are due in two days
+SELECT *
+FROM checkout
+WHERE DATEDIFF(due_date, CURRENT_DATE()) =15;
+
+-- list all the checkouts that are over due 
+SELECT *
+FROM checkout
+WHERE due_date < CURRENT_DATE();
+
+-- list all the books that are checked out today
+SELECT DISTINCT b.*
+FROM book b
+JOIN book_isbn bi ON b.book_id = bi.book_id
+JOIN checkout c ON bi.isbn = c.isbn
+WHERE c.checkout_date = CURRENT_DATE();
+
+
+-- creat a book
+
+-- display all isbns and their checkout status along with book information ( tital, author etc,.)
+SELECT bi.isbn, b.title, b.author_name, b.year_published, b.quantity,        
+       CASE 
+           WHEN c.is_returned = FALSE THEN 'Checked Out' 
+           ELSE 'Available' 
+       END AS checkout_status 
+FROM book b 
+JOIN book_isbn bi ON b.book_id = bi.book_id 
+LEFT JOIN checkout c ON bi.isbn = c.isbn;
 
 
 
