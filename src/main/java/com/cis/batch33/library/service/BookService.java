@@ -1,37 +1,40 @@
 package com.cis.batch33.library.service;
 
-import com.cis.batch33.library.model.Book;
-import com.cis.batch33.library.model.Member;
+import com.cis.batch33.library.entity.LibraryBook;
+import com.cis.batch33.library.repository.LibraryBookRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 @Service
 public class BookService {
-    private Map<Long, Book> bookMap = new HashMap<>();
-
-    public Book createBook(Book book){
+    //private Map<Long, Book> bookMap = new HashMap<>();
+    @Autowired
+    private LibraryBookRepository bookRepository;
+    public LibraryBook createBook(LibraryBook book){
 
         // call the database
-        Long bookId = new Random().nextLong();
-        book.setBookId(bookId);
-        bookMap.put(bookId, book);
-        return  book;
+        //Integer bookId = new Random().nextInt();
+        //book.setBookId(bookId);
+        //bookMap.put(bookId, book);
+        return  bookRepository.save(book);
     }
 
-    public Book getBook(Long bookId) {
-        return bookMap.get(bookId);
+    public LibraryBook getBook(Integer bookId) {
+        Optional<LibraryBook> bookOptional = bookRepository.findById(bookId);
+        return  bookOptional.orElse(new LibraryBook());
 
     }
 
-    public Book updateBook(Book book) {
-        Long bookId = book.getBookId();
-        bookMap.put(bookId, book);
-        return book;
+    public LibraryBook updateBook(LibraryBook LibraryBook) {
+        //Integer bookId = LibraryBook.getBookId();
+        //bookMap.put(bookId, book);
+        return bookRepository.save(LibraryBook);
     }
 
-    public void deleteBook(Long bookId) {
-        bookMap.remove(bookId);
+    public void deleteBook(Integer bookId) {
+        bookRepository.deleteById(bookId);
     }
 }

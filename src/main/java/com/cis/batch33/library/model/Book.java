@@ -1,12 +1,12 @@
 package com.cis.batch33.library.model;
 
 public class Book {
-    private long bookId;
+    private Integer bookId;
     private String author;
     private String publisher;
     private int yearOfPublish;
 
-    public void setBookId(long bookId) {
+    public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
 
@@ -18,11 +18,11 @@ public class Book {
         this.publisher = publisher;
     }
 
-    public void setYearOfPublish(int yearOfPublish) {
+    public void setYearOfPublish(Integer yearOfPublish) {
         this.yearOfPublish = yearOfPublish;
     }
 
-    public long getBookId() {
+    public Integer getBookId() {
         return bookId;
     }
 
@@ -34,7 +34,7 @@ public class Book {
         return publisher;
     }
 
-    public int getYearOfPublish() {
+    public Integer getYearOfPublish() {
         return yearOfPublish;
     }
 }
