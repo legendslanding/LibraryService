@@ -2,6 +2,7 @@ package com.cis.batch33.library.controller;
 
 import com.cis.batch33.library.entity.LibraryMember;
 //import com.cis.batch33.library.model.Member;
+import com.cis.batch33.library.model.Member;
 import com.cis.batch33.library.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,8 @@ public class MemberController {
     private MemberService memberService;
 
     @GetMapping
-    public LibraryMember getMember(Integer memberId){
+    public Member getMember(Integer memberId){
+
         return memberService.getMember(memberId);
     }
 

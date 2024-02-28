@@ -1,10 +1,9 @@
 package com.cis.batch33.library.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Table(name="book")
 @Entity
@@ -25,4 +24,7 @@ public class LibraryBook {
 
     @Column(name="quantity")
     private Integer quantity;
+
+    @OneToMany(mappedBy = "libraryBook")
+    private List<BookIsbn> bookIsbns;
 }

@@ -1,13 +1,19 @@
 package com.cis.batch33.library.service;
 
 import com.cis.batch33.library.entity.LibraryBook;
+import com.cis.batch33.library.model.Book;
+import com.cis.batch33.library.model.BookIsbnDTO;
+import com.cis.batch33.library.model.CheckoutDTO;
 import com.cis.batch33.library.repository.LibraryBookRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
+
 @Service
 public class BookService {
     //private Map<Long, Book> bookMap = new HashMap<>();
@@ -22,10 +28,34 @@ public class BookService {
         return  bookRepository.save(book);
     }
 
-    public LibraryBook getBook(Integer bookId) {
-        Optional<LibraryBook> bookOptional = bookRepository.findById(bookId);
-        return  bookOptional.orElse(new LibraryBook());
+    public Book getBook(Integer bookId) {
+        Optional<LibraryBook> bookOptional =
+                bookRepository.findById(bookId);
+        LibraryBook libraryBook =
+                bookOptional.orElse(new LibraryBook());
 
+        Book book = new Book();
+        book.setBookId(libraryBook.getBookId());
+        book.setTitle(libraryBook.getTitle());
+        book.setAuthorName(libraryBook.getAuthorName());
+        book.setYearPublished(libraryBook.getYearPublished());
+        book.setQuantity(libraryBook.getQuantity());
+
+        List<BookIsbnDTO> bookIsbnDTOS =
+                libraryBook.getBookIsbns().stream().map(b -> {
+                    BookIsbnDTO bdo = new BookIsbnDTO();
+                    bdo.setIsbn(b.getIsbn());
+                    bdo.setBookId(b.getBookId());
+                    return bdo;
+                }).collect(Collectors.toList());
+
+        /*BookIsbnDTO bookIsbnDTO = new BookIsbnDTO();
+        bookIsbnDTO.setBookIsbn(libraryBook.getBookIsbn().getIsbn());
+        bookIsbnDTO.setBookId(libraryBook.getBookIsbn().getBookId());
+*/
+        book.setBookIsbns(bookIsbnDTOS);
+
+        return book;
     }
 
     public LibraryBook updateBook(LibraryBook LibraryBook) {

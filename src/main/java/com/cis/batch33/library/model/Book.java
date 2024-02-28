@@ -1,7 +1,19 @@
 package com.cis.batch33.library.model;
 
+import lombok.Data;
+
+import java.util.List;
+
+@Data
 public class Book {
-    private Integer bookId;
+    private int bookId;
+    private String authorName;
+    private String title;
+    private int yearPublished;
+    private int quantity;
+    private List<BookIsbnDTO> bookIsbns;
+
+    /*private Integer bookId;
     private String author;
     private String publisher;
     private int yearOfPublish;
@@ -36,5 +48,5 @@ public class Book {
 
     public Integer getYearOfPublish() {
         return yearOfPublish;
-    }
+    }*/
 }

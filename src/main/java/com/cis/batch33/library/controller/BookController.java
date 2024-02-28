@@ -2,6 +2,7 @@ package com.cis.batch33.library.controller;
 
 import com.cis.batch33.library.entity.LibraryBook;
 //import com.cis.batch33.library.model.Book;
+import com.cis.batch33.library.model.Book;
 import com.cis.batch33.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,8 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping
-    public LibraryBook getBook(Integer bookId){
+    public Book getBook(Integer bookId){
+
         return bookService.getBook(bookId);
     }
 
