@@ -25,6 +25,6 @@ public class LibraryBook {
     @Column(name="quantity")
     private Integer quantity;
 
-    @OneToMany(mappedBy = "libraryBook")
+    @OneToMany(mappedBy = "libraryBook", cascade = CascadeType.ALL)
     private List<BookIsbn> bookIsbns;
 }

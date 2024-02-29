@@ -21,14 +21,14 @@ public class MemberController {
 
     // create a member
     @PostMapping
-    public LibraryMember createMember(@RequestBody  LibraryMember member){
+    public Member createMember(@RequestBody  Member member){
         return memberService.createMember(member);
     }
 
-   @PutMapping
-    public LibraryMember updateMember(@RequestBody LibraryMember LibraryMember){
+    @PutMapping
+    public Member updateMember(@RequestBody Member Member){
         // Set the memberId for the member object to be updated
-        return memberService.updateMember(LibraryMember);
+        return memberService.updateMember(Member);
     }
 
     @DeleteMapping
